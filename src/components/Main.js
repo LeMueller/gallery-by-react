@@ -65,6 +65,17 @@ class AppComponent extends React.Component {
 	constructor(props){
 		super(props);
 
+		this.state={
+			imgsArrangeArr:[
+				/*{
+					pos:{
+						left:'0',
+						top:'0'
+					}
+				}*/
+			]
+		};
+
 		this.Constant={
 			centerPos:{
 				left:0,
@@ -88,7 +99,41 @@ class AppComponent extends React.Component {
 	*/
 
 	rearrange(centerIndex){
+		let imgsArrangeArr=this.state.imgsArrangeArr,
+			Constant=this.Constant,
+			centerPos=Constant.centerPos,
+			hPosRange=Constant.hPosRange,
+			vPosRange=Constant.vPosRange,
+			hPosRangeLeftSecX = hPosRange.leftSecX,
+			hposRangeRightSecX = hPosRange.rightSecX,
+			hPosRangeY = hPosRange.y,
+			vPosRangeTopY=vPosRange.topY,
+			vPosRangeX = vPosRange.x,
 
+			imgsArrangeTopArr = [],
+
+			topImgNum = Math.ceil(Math.random() * 2), //取一个，或者不取
+
+			topImgSpliceIndex = 0,
+
+			imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1);
+
+			//首先居中centerIdex的图片
+			imgsArrangeCenterArr[0].pos=centerPos;
+
+			//取出要布局上册的图片的状态信息
+			topImgSpliceIndex=Math.ceil(Math.random()*(imgsArrangeArr.length - topImgNum));
+			imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex, topImgNum);
+
+			//布局位于上册的图片
+			imgsArrangeTopArr.forEach(function(value, index){
+				/*
+				imgsArrangeTopArr[index].pos={
+					top:vPosRangeTopY[0] vPosRangeTopY[1],
+					left:
+				}
+				*/
+			})
 	}
 
 	//组件加载以后，为每张图片计算器位置的范围
@@ -129,7 +174,7 @@ class AppComponent extends React.Component {
 		this.Constant.vPosRange.x[0] = halfStageW-imgW;
 		this.Constant.vPosRange.x[1] = halfImgW;
 
-
+		this.rearrange(0);
 
 	}
 
@@ -139,8 +184,18 @@ class AppComponent extends React.Component {
 
 	
 	imageDatas.forEach(function(value,index){
+
+		if(!this.state.imgsArrangeArr[index]){
+			this.state.imgsArrangeArr[index]={
+				pos:{
+					left:0,
+					top:0
+				}
+			}
+		}
+
 		imgFigures.push(<ImgFigure key={value.fileName.toString()} data={value} ref={'imgFigure'+index}/>);
-	});
+	}.bind(this));
 	
 
 
