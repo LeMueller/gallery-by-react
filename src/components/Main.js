@@ -42,7 +42,7 @@ imageDatas=(function genImageURL(imageDatasArr){
 	}
 ]);
 
-console.log(imageDatas);
+//console.log(imageDatas);
 
 //imageDatas=genImageURL(imageDatas);
 
@@ -61,19 +61,91 @@ class ImgFigure extends React.Component{
 }
 
 class AppComponent extends React.Component {
+
+	constructor(props){
+		super(props);
+
+		this.Constant={
+			centerPos:{
+				left:0,
+				right:0
+			},
+			hPosRange:{ //水平方向的取值范围
+				leftSecX:[0,0],
+				rightSecX: [0.0],
+				y:[0,0]
+			},
+			vPosRange:{//垂直方向的取值范围
+				x:[0,0],
+				topY:[0,0]
+			}
+		}
+	}
+
+	/*
+	*重新布局所有图片
+	*@param centerIndex 指定中心图片
+	*/
+
+	rearrange(centerIndex){
+
+	}
+
+	//组件加载以后，为每张图片计算器位置的范围
+	componentDidMount(){
+		//首先拿到舞台的大小
+		//console.log("this.refs.stage::: "+this.refs.stage);
+		let stageDOM = this.refs.stage,
+		//console.log("stageDOM::: "+stageDOM);
+			stageW=stageDOM.scrollWidth,
+			stageH=stageDOM.scrollHeight,
+			halfStageW=Math.ceil(stageW/2),
+			halfStageH=Math.ceil(stageH/2);
+		//拿到一个imageFigure的大小
+		let imgFigureDOM = this.refs.imgFigure0,
+			imgW=imgFigureDOM.scrollWidth,
+			imgH=imgFigureDOM.scrollHeight,
+			halfImgW=Math.ceil(imgW/2),
+			halfImgH=Math.ceil(imgH/2);
+
+		//计算中间部分，图片位置取值范围
+		
+		this.Constant.centerPos={
+			left:halfStageW-halfImgW,
+			top:halfStageH-halfImgH,
+		}
+
+		//计算左右两侧，图片位置取值范围
+		this.Constant.hPosRange.leftSecX[0]=-halfImgW;
+		this.Constant.hPosRange.leftSecX[1]=halfStageW-halfImgW*3;
+		this.Constant.hPosRange.rightSecX[0]=halfStageW+halfImgW;
+		this.Constant.hPosRange.rightSecX[1]=stageW-halfImgW;
+		this.Constant.hPosRange.y[0]=-halfImgH;
+		this.Constant.hPosRange.y[1]=stageH-halfImgH;
+
+		//计算上部，图片位置取值范围
+		this.Constant.vPosRange.topY[0] = -halfImgH;
+		this.Constant.vPosRange.topY[1] = halfStageH - halfImgH*3;
+		this.Constant.vPosRange.x[0] = halfStageW-imgW;
+		this.Constant.vPosRange.x[1] = halfImgW;
+
+
+
+	}
+
   render() {
 	
 	let controllerUnits=[], imgFigures=[];
 
 	
-	imageDatas.forEach(function(value){
-		imgFigures.push(<ImgFigure key={value.fileName.toString()} data={value}/>);
+	imageDatas.forEach(function(value,index){
+		imgFigures.push(<ImgFigure key={value.fileName.toString()} data={value} ref={'imgFigure'+index}/>);
 	});
 	
 
 
     return (
-     <section className="stage">
+     <section className="stage" ref="stage">
      	<section className="img-sec">
      		{imgFigures}
      	</section>
