@@ -99,7 +99,7 @@ class ImgFigure extends React.Component{
 		}
 
 		return (
-			<figure className="img-figure" style={styleObj}>
+			<figure className="img-figure" style={styleObj} ref ="figure">
 				<img src={this.props.data.imageURL}
 					alt={this.props.data.title}/>
 				<figcaption>
@@ -160,7 +160,7 @@ class AppComponent extends React.Component {
 			vPosRangeTopY=vPosRange.topY,
 			vPosRangeX = vPosRange.x,
 
-			imgsArrangeTopArr = [], //上册区域图片的状态信息
+			imgsArrangeTopArr = [], //上侧区域图片的状态信息
 
 			topImgNum = Math.ceil(Math.random() * 2), //取一个，或者不取
 
@@ -175,13 +175,24 @@ class AppComponent extends React.Component {
 			topImgSpliceIndex=Math.ceil(Math.random()*(imgsArrangeArr.length - topImgNum));
 			imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex, topImgNum);
 
+			//console.log("vPosRange.topY::: "+vPosRange.topY);
+
 			//布局位于上册的图片
 			imgsArrangeTopArr.forEach(function(value, index){
-				
+
+				//console.log("vPosRangeTopY[0]::: "+vPosRangeTopY[0]);
+				//console.log("vPosRangeTopY[1]::: "+vPosRangeTopY[1]);
+				//console.log("vPosRangeX[0]::: "+vPosRangeX[0]);
+				//console.log("vPosRangeX[1]::: "+vPosRangeX[1]);
+
+				let valueOfLeft=getRangeRandom(vPosRangeX[0], vPosRangeX[1]);
+
 				imgsArrangeTopArr[index].pos={
 					top:getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]), 
-					left:getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+					left:valueOfLeft,
 				}
+
+				//console.log("valueOfLeft::: "+valueOfLeft);
 				
 			});
 
@@ -225,12 +236,21 @@ class AppComponent extends React.Component {
 			stageH=stageDOM.scrollHeight,
 			halfStageW=Math.ceil(stageW/2),
 			halfStageH=Math.ceil(stageH/2);
-		//拿到一个imageFigure的大小
-		let imgFigureDOM = this.refs.imgFigure0,
-			imgW=imgFigureDOM.scrollWidth,
+
+		//console.log("stageDOM.scrollWidth,::: "+stageDOM.scrollWidth);
+
+
+		//拿到一个imageFigure的大小!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!( imgFigureDOM 有问题！！！！！！！！)
+		let imgFigureDOM = this.refs.imgFigure0.refs.figure; //必须ref到原生的html标签，不然会人做[obj Obj]
+
+		//console.log("this.imgFigure0.refs.figure::: "+this.refs.imgFigure0.refs.figure);
+
+		let	imgW=imgFigureDOM.scrollWidth,
 			imgH=imgFigureDOM.scrollHeight,
 			halfImgW=Math.ceil(imgW/2),
 			halfImgH=Math.ceil(imgH/2);
+
+		
 
 		//计算中间部分，图片位置取值范围
 		
@@ -247,11 +267,16 @@ class AppComponent extends React.Component {
 		this.Constant.hPosRange.y[0]=-halfImgH;
 		this.Constant.hPosRange.y[1]=stageH-halfImgH;
 
-		//计算上部，图片位置取值范围
+		//计算上部图片位置取值范围
 		this.Constant.vPosRange.topY[0] = -halfImgH;
 		this.Constant.vPosRange.topY[1] = halfStageH - halfImgH*3;
+
+		//console.log("this.Constant.vPosRange.topY::: "+this.Constant.vPosRange.topY);
+
 		this.Constant.vPosRange.x[0] = halfStageW-imgW;
 		this.Constant.vPosRange.x[1] = halfStageW;
+
+		//console.log("this.Constant.vPosRange.x::: "+this.Constant.vPosRange.x);
 
 		this.rearrange(0);
 
@@ -273,7 +298,9 @@ class AppComponent extends React.Component {
 			}
 		}
 
-		imgFigures.push(<ImgFigure key={value.fileName.toString()} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
+		//console.log("index::: "+index);
+
+		imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
 	}.bind(this));
 	
 
