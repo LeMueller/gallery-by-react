@@ -8,7 +8,7 @@ import React from 'react';
 //get the datas of picture
 //let imageDatas=require('../data/imageData.json');
 let imageDatas=require('../data/imageData.json');//返回的是个obj，不是array of obj！！！！！！！！！！
-//**console.log("imageDatas:::::: " + imageDatas[0]);
+//console.log("imageDatas::: " + imageDatas);
 //transform the fileName to imageURL with the self-run function
 imageDatas=(function genImageURL(imageDatasArr){
 	//**console.log("imageDatasArr:::::: "+imageDatasArr);
@@ -22,60 +22,7 @@ imageDatas=(function genImageURL(imageDatasArr){
 	}
 	
 	return imageDatasArr;
-})([
-	{
-		"fileName":"1.png",
-		"title":"gj",
-		"desc":"good job"
-	},
-
-	{
-		"fileName":"2.png",
-		"title":"smile",
-		"desc":"hahaha"
-	},
-
-	{
-		"fileName":"3.png",
-		"title":"questionmark",
-		"desc":"what are you doing?"
-	},
-	{
-		"fileName":"4.png",
-		"title":"wp",
-		"desc":"well play"
-	},
-
-	{
-		"fileName":"5.png",
-		"title":"cry",
-		"desc":"uuu..."
-	},
-
-	{
-		"fileName":"6.png",
-		"title":"love",
-		"desc":"heart"
-	},
-	{
-		"fileName":"7.png",
-		"title":"uhuh",
-		"desc":"uhuh..."
-	},
-
-	{
-		"fileName":"8.png",
-		"title":"lala",
-		"desc":"lalala..."
-	},
-
-	{
-		"fileName":"9.png",
-		"title":"ok",
-		"desc":"ok"
-	}
-
-]);
+})(imageDatas);
 
 //console.log(imageDatas);
 
