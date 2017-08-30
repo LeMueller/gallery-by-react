@@ -42,38 +42,38 @@ imageDatas=(function genImageURL(imageDatasArr){
 	},
 	{
 		"fileName":"4.png",
-		"title":"gj",
-		"desc":"good job"
+		"title":"wp",
+		"desc":"well play"
 	},
 
 	{
 		"fileName":"5.png",
-		"title":"smile",
-		"desc":"hahaha"
+		"title":"cry",
+		"desc":"uuu..."
 	},
 
 	{
 		"fileName":"6.png",
-		"title":"questionmark",
-		"desc":"what are you doing?"
+		"title":"love",
+		"desc":"heart"
 	},
 	{
 		"fileName":"7.png",
-		"title":"gj",
-		"desc":"good job"
+		"title":"uhuh",
+		"desc":"uhuh..."
 	},
 
 	{
 		"fileName":"8.png",
-		"title":"smile",
-		"desc":"hahaha"
+		"title":"lala",
+		"desc":"lalala..."
 	},
 
 	{
 		"fileName":"9.png",
-		"title":"questionmark",
-		"desc":"what are you doing?"
-	},
+		"title":"ok",
+		"desc":"ok"
+	}
 
 ]);
 
