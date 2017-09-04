@@ -48,8 +48,8 @@ class ImgFigure extends React.Component{
 	*imgFigure的点击处理函数
 	*/
 	handleClick(e){
-
-		this.props.inverse();
+		//console.log("e::: "+e);
+		this.props.inverse(); //为什么可以没有参数????????????
 
 		e.stopPropagation();
 		e.preventDefault();
@@ -76,7 +76,7 @@ class ImgFigure extends React.Component{
 			imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse' : '';
 
 		return (
-			<figure className="img-figure" style={styleObj} ref ="figure" onClick={this.handleClick}>
+			<figure className={imgFigureClassName} style={styleObj} ref ="figure" onClick={this.handleClick.bind(this)}>
 				<img src={this.props.data.imageURL}
 					alt={this.props.data.title}/>
 				<figcaption>
@@ -135,7 +135,7 @@ class AppComponent extends React.Component {
  	inverse(index){
  		return function(){
 
- 			console.log("function inverse")
+ 			//console.log("function inverse")
 
  			let imgsArrangeArr = this.state.imgsArrangeArr;
 
@@ -143,7 +143,7 @@ class AppComponent extends React.Component {
 
  			this.setState({
  				imgsArrangeArr: imgsArrangeArr
- 			})
+ 			});
  		}.bind(this);
  	}
 	/*
