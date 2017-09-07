@@ -131,7 +131,7 @@ class ControllerUnit extends React.Component{
 			}
 		}
 		return (
-			<span className={controllerUnitClassName} onClick={this.handleClick}></span>
+			<span className={controllerUnitClassName} onClick={this.handleClick.bind(this)}></span>
 		)
 	}
 }
@@ -387,7 +387,7 @@ class AppComponent extends React.Component {
 		controllerUnits.push(<ControllerUnit key ={index}
 			arrange={this.state.imgsArrangeArr[index]}
 			inverse={this.inverse(index).bind(this)} 
-			center={this.center(index).bind(this)}/>)
+			center={this.center(index)}/>)
 	}.bind(this));
 	
 
