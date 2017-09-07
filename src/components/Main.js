@@ -105,6 +105,38 @@ class ImgFigure extends React.Component{
 	}
 }
 
+class ControllerUnit extends React.Component{
+	handleClick(e){
+
+		//如果点击的是当前居中态的按钮，则翻转图片，否则将对应图片居中
+		if(this.props.arrange.isCenter){
+			this.props.inverse();
+		}else{
+			this.props.center();
+		}
+
+		e.preventDefault();
+		e.stopPropagation();
+	}
+	render(){
+		let controllerUnitClassName = "controller-unit";
+
+		//如果对应的是居中的图片，显示控制按钮的居中态
+		if(this.props.arrange.isCenter){
+			controllerUnitClassName += " is-center";
+
+			//如果同时对应的是翻转图片，显示控制看牛的翻转态
+			if(this.props.arrange.isInverse){
+				controllerUnitClassName += " is-inverse";
+			}
+		}
+		return (
+			<span className={controllerUnitClassName} onClick={this.handleClick}></span>
+		)
+	}
+}
+
+
 class AppComponent extends React.Component {
 
 	constructor(props){
@@ -180,7 +212,7 @@ class AppComponent extends React.Component {
 
 			imgsArrangeTopArr = [], //上侧区域图片的状态信息
 
-			topImgNum = Math.ceil(Math.random() * 2), //取一个，或者不取
+			topImgNum = Math.floor(Math.random() * 2), //取一个，或者不取
 
 			topImgSpliceIndex = 0, //布局于上部的图片是从数组对象中的哪个拿出来的
 
@@ -242,6 +274,8 @@ class AppComponent extends React.Component {
 					isCenter: false
 				}
 			}
+
+			//debugger;
 
 			//填充回上部区域图片的新信息
 			if(imgsArrangeTopArr && imgsArrangeTopArr[0]){
@@ -349,6 +383,11 @@ class AppComponent extends React.Component {
 			arrange={this.state.imgsArrangeArr[index]}
 			inverse={this.inverse(index).bind(this)} 
 			center={this.center(index)}/>);
+
+		controllerUnits.push(<ControllerUnit key ={index}
+			arrange={this.state.imgsArrangeArr[index]}
+			inverse={this.inverse(index).bind(this)} 
+			center={this.center(index).bind(this)}/>)
 	}.bind(this));
 	
 
